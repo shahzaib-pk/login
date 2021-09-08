@@ -26,8 +26,13 @@ const userSchema = new mongoose.Schema({
 });
 
 
-userSchema.methods.generateAuthToken = function() {
-  const token = jwt.sign({ _id: this._id}, config.get('jwtPrivateKey'), { expiresIn: 900 });
+userSchema.statics.generateAuthToken = function(userId) {
+  const token = jwt.sign({ _id: userId}, config.get('jwtPrivateKey'), { expiresIn: 30 });
+  return token;
+}
+
+userSchema.statics.generateRefreshToken = function(userId) {
+  const token = jwt.sign({ _id: userId}, config.get('jwtRefreshKey'));
   return token;
 }
 
