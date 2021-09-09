@@ -27,12 +27,12 @@ const userSchema = new mongoose.Schema({
 
 
 userSchema.statics.generateAuthToken = function(userId) {
-  const token = jwt.sign({ _id: userId}, config.get('jwtPrivateKey'), { expiresIn: 30 });
+  const token = jwt.sign({ _id: userId}, config.get('jwtPrivateKey'), { expiresIn: '15m' });
   return token;
 }
 
 userSchema.statics.generateRefreshToken = function(userId) {
-  const token = jwt.sign({ _id: userId}, config.get('jwtRefreshKey'));
+  const token = jwt.sign({ _id: userId}, config.get('jwtRefreshKey'), { expiresIn: '5d' });
   return token;
 }
 
